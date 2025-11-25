@@ -44,18 +44,22 @@ export function ChatArea() {
       try {
         const convs = await MessagesService.getConversations(user.uid);
         if (convs.length === 0) {
-          const newConv = await MessagesService.createConversation(
-            user.uid,
-            "Nouvelle conversation",
-          );
-          setCurrentConversationId(newConv.id);
+          try {
+            const newConv = await MessagesService.createConversation(
+              user.uid,
+              "Nouvelle conversation",
+            );
+            setCurrentConversationId(newConv.id);
+          } catch (createError) {
+            console.debug("Conversation creation deferred", createError);
+          }
         } else {
           setCurrentConversationId(convs[0].id);
           const msgs = await MessagesService.getMessages(convs[0].id);
           setMessages(msgs);
         }
       } catch (error) {
-        toast.error("Erreur lors du chargement des conversations");
+        console.debug("Conversations load handled silently", error);
       }
     };
 
