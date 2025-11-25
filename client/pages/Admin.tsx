@@ -60,11 +60,20 @@ export default function Admin() {
 
   const loadData = async () => {
     try {
-      await Promise.all([loadUsers(), loadLicenses()]);
+      await Promise.all([loadUsers(), loadLicenses(), loadAiConfig()]);
     } catch (error) {
       toast.error("Erreur lors du chargement des données");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadAiConfig = async () => {
+    try {
+      const config = await AIService.getConfig();
+      setAiConfig(config);
+    } catch (error) {
+      console.error("Erreur lors du chargement de la config IA", error);
     }
   };
 
