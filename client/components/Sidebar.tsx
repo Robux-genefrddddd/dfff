@@ -265,7 +265,7 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
         <DialogContent className="bg-card border-2 border-white rounded-xl">
           <DialogHeader>
             <DialogTitle className="text-foreground">
-              Edit Conversation
+              Modifier la Conversation
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
@@ -273,7 +273,7 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
               type="text"
               value={editName}
               onChange={(e) => setEditName(e.target.value)}
-              placeholder="Conversation name..."
+              placeholder="Nom de la conversation..."
               className="w-full bg-background border border-white/30 rounded-lg px-4 py-2 text-foreground placeholder-foreground/40 focus:outline-none focus:border-white transition-colors"
               onKeyPress={(e) => {
                 if (e.key === "Enter") {
@@ -287,13 +287,13 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
               onClick={() => setIsDialogOpen(false)}
               className="px-4 py-2 text-foreground/70 border border-white/30 rounded-lg hover:bg-white/5 transition-colors"
             >
-              Cancel
+              Annuler
             </button>
             <button
               onClick={handleSaveEdit}
               className="px-4 py-2 bg-white/20 text-foreground border border-white rounded-lg hover:bg-white/30 transition-colors font-medium"
             >
-              Save
+              Enregistrer
             </button>
           </DialogFooter>
         </DialogContent>
