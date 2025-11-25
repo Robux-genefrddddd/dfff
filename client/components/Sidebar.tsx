@@ -29,8 +29,8 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
       >
         {/* Header - Minimal */}
         <div className="p-4 animate-fadeIn">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-10 h-10 bg-foreground rounded-full flex items-center justify-center text-background text-sm font-bold border-2 border-foreground hover:scale-110 transition-transform">
+          <div className="flex items-center gap-3 mb-2 justify-start">
+            <div className="w-10 h-10 bg-foreground rounded-full flex items-center justify-center text-background text-sm font-bold border-2 border-white hover:scale-110 transition-transform">
               N
             </div>
             <div className="flex-1">
@@ -39,7 +39,7 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
               </p>
             </div>
           </div>
-          <p className="text-xs text-foreground/50 truncate pl-12">
+          <p className="text-xs text-foreground/50 truncate pl-0">
             nothing@example.com
           </p>
         </div>
@@ -72,8 +72,8 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
         </div>
 
         {/* Footer */}
-        <div className="p-4 border-t-2 border-white/10 animate-fadeIn" style={{ animationDelay: "0.3s" }}>
-          <button className="w-full flex items-center justify-center gap-2 px-4 py-3 text-foreground/70 hover:text-foreground border-2 border-white/20 hover:border-white/40 hover:bg-white/5 transition-all text-sm font-medium rounded-2xl hover:scale-105 transform">
+        <div className="p-4 border-t-2 border-transparent bg-gradient-to-r from-red-600/20 to-transparent animate-fadeIn" style={{ animationDelay: "0.3s", borderImage: "linear-gradient(90deg, rgb(220, 38, 38) 0%, transparent 100%) 1" }}>
+          <button className="w-full flex items-center justify-center gap-2 px-4 py-3 text-foreground hover:text-foreground border-2 border-transparent bg-gradient-to-r from-red-600/10 to-transparent hover:from-red-600/20 transition-all text-sm font-medium rounded-2xl hover:scale-105 transform" style={{ borderImage: "linear-gradient(90deg, rgb(220, 38, 38) 0%, transparent 100%) 1" }}>
             <LogOut size={16} />
             <span className="hidden sm:inline">Sign out</span>
           </button>
