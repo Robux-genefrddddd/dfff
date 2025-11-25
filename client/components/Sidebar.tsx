@@ -2,6 +2,8 @@ import { Plus, LogOut, MoreVertical, Trash2, Edit2 } from "lucide-react";
 import { useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { SettingsModal } from "@/components/SettingsModal";
+import { HelpModal } from "@/components/HelpModal";
 
 interface Conversation {
   id: number;
@@ -26,7 +28,10 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editName, setEditName] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
   const [currentPlan] = useState<PlanType>("Pro");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const handleNewConversation = () => {
     const newId = Math.max(...conversations.map(c => c.id), 0) + 1;
@@ -99,7 +104,7 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                 <p className="text-xs text-white/50 font-medium">{currentPlan}</p>
               </div>
             </div>
-            <Popover>
+            <Popover open={isMenuOpen} onOpenChange={setIsMenuOpen}>
               <PopoverTrigger asChild>
                 <button className="p-1.5 hover:bg-white/10 rounded-lg transition-colors text-foreground/70 hover:text-foreground">
                   <MoreVertical size={16} />
@@ -107,10 +112,22 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
               </PopoverTrigger>
               <PopoverContent className="w-40 p-2 bg-card border-2 border-white rounded-xl">
                 <div className="space-y-1">
-                  <button className="w-full text-left px-3 py-2 rounded-lg text-sm text-foreground/70 hover:text-foreground hover:bg-white/10 transition-colors">
+                  <button
+                    onClick={() => {
+                      setIsSettingsOpen(true);
+                      setIsMenuOpen(false);
+                    }}
+                    className="w-full text-left px-3 py-2 rounded-lg text-sm text-foreground/70 hover:text-foreground hover:bg-white/10 transition-colors"
+                  >
                     Settings
                   </button>
-                  <button className="w-full text-left px-3 py-2 rounded-lg text-sm text-foreground/70 hover:text-foreground hover:bg-white/10 transition-colors">
+                  <button
+                    onClick={() => {
+                      setIsHelpOpen(true);
+                      setIsMenuOpen(false);
+                    }}
+                    className="w-full text-left px-3 py-2 rounded-lg text-sm text-foreground/70 hover:text-foreground hover:bg-white/10 transition-colors"
+                  >
                     Help
                   </button>
                 </div>
