@@ -631,7 +631,8 @@ export default function Admin() {
                     <label className="block text-sm font-medium text-foreground/70 mb-2">
                       Modèle
                     </label>
-                    <select
+                    <input
+                      type="text"
                       value={aiConfig?.model || ""}
                       onChange={(e) =>
                         setAiConfig(
@@ -639,13 +640,11 @@ export default function Admin() {
                         )
                       }
                       className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/40"
-                    >
-                      {AIService.getAvailableModels().map((model) => (
-                        <option key={model} value={model}>
-                          {model}
-                        </option>
-                      ))}
-                    </select>
+                      placeholder="ex: x-ai/grok-4.1-fast:free"
+                    />
+                    <p className="text-xs text-foreground/50 mt-2">
+                      Entrez le nom du modèle OpenRouter
+                    </p>
                   </div>
 
                   {/* Temperature Slider */}
