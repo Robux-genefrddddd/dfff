@@ -28,44 +28,19 @@ const EMOJIS = [
   "💯",
 ];
 
+interface ChatMessage {
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+  timestamp: number;
+}
+
 export function ChatArea() {
   const { user, userData } = useAuth();
   const [message, setMessage] = useState("");
   const [emojiOpen, setEmojiOpen] = useState(false);
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
   const [loading, setLoading] = useState(false);
-  const [currentConversationId, setCurrentConversationId] = useState<
-    string | null
-  >(null);
-
-  useEffect(() => {
-    const initConversation = async () => {
-      if (!user || !userData) return;
-
-      try {
-        const convs = await MessagesService.getConversations(user.uid);
-        if (convs.length === 0) {
-          try {
-            const newConv = await MessagesService.createConversation(
-              user.uid,
-              "Nouvelle conversation",
-            );
-            setCurrentConversationId(newConv.id);
-          } catch (createError) {
-            console.debug("Conversation creation deferred", createError);
-          }
-        } else {
-          setCurrentConversationId(convs[0].id);
-          const msgs = await MessagesService.getMessages(convs[0].id);
-          setMessages(msgs);
-        }
-      } catch (error) {
-        console.debug("Conversations load handled silently", error);
-      }
-    };
-
-    initConversation();
-  }, [user, userData]);
 
   const handleSend = async () => {
     if (!message.trim() || !user || !currentConversationId || !userData) return;
