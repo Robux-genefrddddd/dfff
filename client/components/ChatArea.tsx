@@ -47,7 +47,7 @@ export function ChatArea() {
 
       {/* Message Input Area */}
       <div className="px-6 py-6 animate-slideUp" style={{ animationDelay: "0.2s" }}>
-        <div className="flex items-end gap-3 border-2 border-foreground/30 rounded-2xl px-4 py-3 bg-background/50 hover:border-foreground/50 transition-colors group">
+        <div className="flex items-end gap-3 border-2 border-white rounded-2xl px-4 py-3 bg-background/50 hover:border-white/80 transition-colors group">
           <input
             type="text"
             value={message}
