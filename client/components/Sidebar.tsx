@@ -147,9 +147,7 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
                     {loading ? "..." : userData?.displayName || "Utilisateur"}
                   </p>
                   {userData?.isAdmin && (
-                    <span className="px-2 py-0.5 text-xs font-bold bg-white/20 border border-white/40 rounded text-white">
-                      Admin
-                    </span>
+                    <span className="w-2 h-2 bg-red-500 rounded-full" title="Admin"></span>
                   )}
                 </div>
                 <p className="text-xs text-white/50 font-medium">
