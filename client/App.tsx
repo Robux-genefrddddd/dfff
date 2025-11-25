@@ -50,6 +50,52 @@ function AuthPages() {
   return user ? <Navigate to="/" replace /> : <></>;
 }
 
+function AppRoutes() {
+  const navigate = useNavigate();
+  const { userData } = useAuth();
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "F1") {
+        e.preventDefault();
+        if (userData?.isAdmin) {
+          navigate("/admin");
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [navigate, userData?.isAdmin]);
+
+  return (
+    <Routes>
+      <Route
+        path="/login"
+        element={
+          <>
+            <AuthPages />
+            <Login />
+          </>
+        }
+      />
+      <Route
+        path="/register"
+        element={
+          <>
+            <AuthPages />
+            <Register />
+          </>
+        }
+      />
+      <Route path="/admin" element={<AdminRoute element={<Admin />} />} />
+      <Route path="/" element={<ProtectedRoute element={<Index />} />} />
+      {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
+}
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
