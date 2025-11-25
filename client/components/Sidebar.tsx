@@ -1,4 +1,4 @@
-import { Plus, LogOut, MoreVertical } from "lucide-react";
+import { Plus, LogOut, MoreVertical, Zap } from "lucide-react";
 import { useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
@@ -11,6 +11,8 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
   const [conversations] = useState([
     { id: 1, name: "New Conversation", active: true },
   ]);
+  const [messagesUsed] = useState(7);
+  const [messagesLimit] = useState(15);
 
   return (
     <>
@@ -69,24 +71,24 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
           <div className="h-px bg-white/10"></div>
         </div>
 
-        {/* New Conversation Button - Discreet */}
+        {/* New Conversation Button - More Attractive */}
         <div className="px-4 py-2 animate-fadeIn" style={{ animationDelay: "0.1s" }}>
-          <button className="w-full flex items-center justify-center gap-2 px-4 py-2.5 border border-white/30 text-foreground/80 hover:border-white/50 hover:text-foreground hover:bg-white/5 transition-all text-sm font-medium rounded-lg">
-            <Plus size={16} />
+          <button className="w-full flex items-center justify-center gap-2 px-4 py-3 border-2 border-white text-foreground hover:border-white/80 hover:bg-white/10 transition-all text-sm font-semibold rounded-xl hover:scale-105 transform">
+            <Plus size={18} />
             New conversation
           </button>
         </div>
 
         {/* Conversations List */}
         <div className="flex-1 overflow-y-auto p-4">
-          <div className="space-y-1">
+          <div className="space-y-2">
             {conversations.map((conv, idx) => (
               <button
                 key={conv.id}
-                className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-all border ${
+                className={`w-full text-left px-4 py-3 rounded-lg text-sm transition-all border-2 ${
                   conv.active
-                    ? "bg-white/5 text-foreground border-white/40"
-                    : "text-foreground/60 hover:text-foreground/80 hover:bg-white/5 border-transparent hover:border-white/30"
+                    ? "bg-white/10 text-foreground border-white hover:bg-white/15"
+                    : "text-foreground/70 hover:text-foreground hover:bg-white/5 border-white/30 hover:border-white/60"
                 }`}
                 style={{ animationDelay: `${0.2 + idx * 0.05}s` }}
               >
@@ -96,10 +98,29 @@ export function Sidebar({ isOpen = true, onClose }: SidebarProps) {
           </div>
         </div>
 
+        {/* Message Usage Section */}
+        <div className="px-4 py-4 border-t border-white/10 animate-fadeIn" style={{ animationDelay: "0.25s" }}>
+          <div className="flex items-center gap-2 mb-2">
+            <Zap size={14} className="text-white/70" />
+            <span className="text-xs text-white/70 font-medium">Messages</span>
+          </div>
+          <div className="space-y-1">
+            <div className="relative h-2 bg-white/10 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-gradient-to-r from-white/40 to-white/60 rounded-full transition-all"
+                style={{ width: `${(messagesUsed / messagesLimit) * 100}%` }}
+              ></div>
+            </div>
+            <p className="text-xs text-white/60">
+              {messagesLimit - messagesUsed} of {messagesLimit} remaining
+            </p>
+          </div>
+        </div>
+
         {/* Footer - Sign Out */}
-        <div className="p-4 border-t border-white/10 animate-fadeIn" style={{ animationDelay: "0.3s" }}>
-          <button className="w-full flex items-center justify-center gap-2 px-4 py-3 text-foreground border-2 border-red-500/50 hover:border-red-500 hover:bg-red-500/10 transition-all text-sm font-medium rounded-xl hover:scale-105 transform">
-            <LogOut size={18} />
+        <div className="px-4 py-3 border-t border-white/10 animate-fadeIn" style={{ animationDelay: "0.3s" }}>
+          <button className="w-full flex items-center justify-center gap-2 px-3 py-2 text-foreground/70 hover:text-foreground border-2 border-red-500/50 hover:border-red-500 hover:bg-red-500/10 transition-all text-xs font-medium rounded-lg hover:scale-105 transform">
+            <LogOut size={16} />
             <span>Sign out</span>
           </button>
         </div>
