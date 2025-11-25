@@ -117,7 +117,7 @@ export function ChatArea() {
           <button
             onClick={handleSend}
             className="p-2 text-foreground hover:text-foreground transition-colors hover:bg-foreground/10 rounded-lg flex items-center justify-center hover:scale-110 transform transition-transform"
-            aria-label="Send message"
+            aria-label="Envoyer le message"
           >
             <Send size={18} />
           </button>
