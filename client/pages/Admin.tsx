@@ -291,9 +291,9 @@ export default function Admin() {
                       </tr>
                     </thead>
                     <tbody>
-                      {users.map((user) => (
+                      {users.filter((user) => user && user.uid).map((user) => (
                         <tr
-                          key={user.uid}
+                          key={`user-${user.uid}`}
                           className="border-b border-white/10 hover:bg-white/5 transition-colors"
                         >
                           <td className="px-6 py-4">
