@@ -44,10 +44,12 @@ import {
 export default function Admin() {
   const { userData } = useAuth();
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState<"users" | "licenses" | "ai">("users");
+  const [activeTab, setActiveTab] = useState<"users" | "licenses" | "ai" | "system">("users");
   const [users, setUsers] = useState<UserData[]>([]);
   const [licenses, setLicenses] = useState<LicenseKey[]>([]);
   const [aiConfig, setAiConfig] = useState<AIConfig | null>(null);
+  const [bans, setBans] = useState<UserBan[]>([]);
+  const [maintenanceNotices, setMaintenanceNotices] = useState<MaintenanceNotice[]>([]);
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editData, setEditData] = useState<Partial<UserData>>({});
@@ -55,6 +57,15 @@ export default function Admin() {
   const [selectedPlanForGeneration, setSelectedPlanForGeneration] =
     useState<PlanType>("Classic");
   const [savingAiConfig, setSavingAiConfig] = useState(false);
+  const [userEmailToBan, setUserEmailToBan] = useState("");
+  const [banReason, setBanReason] = useState("");
+  const [banDuration, setBanDuration] = useState<number | null>(null);
+  const [maintenanceTitle, setMaintenanceTitle] = useState("");
+  const [maintenanceMessage, setMaintenanceMessage] = useState("");
+  const [maintenanceDuration, setMaintenanceDuration] = useState(30);
+  const [maintenanceSeverity, setMaintenanceSeverity] = useState<"info" | "warning" | "critical">("warning");
+  const [savingBan, setSavingBan] = useState(false);
+  const [savingMaintenance, setSavingMaintenance] = useState(false);
 
   const planLimits: Record<PlanType, number> = {
     Free: 10,
