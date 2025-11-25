@@ -613,6 +613,154 @@ export default function Admin() {
             </div>
           </>
         )}
+
+        {activeTab === "ai" && (
+          <>
+            {/* AI Configuration Section */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* Model and Temperature */}
+              <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+                <h3 className="text-lg font-semibold text-white mb-6 flex items-center gap-2">
+                  <Brain size={20} />
+                  Paramètres du modèle
+                </h3>
+
+                <div className="space-y-5">
+                  {/* Model Selection */}
+                  <div>
+                    <label className="block text-sm font-medium text-foreground/70 mb-2">
+                      Modèle
+                    </label>
+                    <select
+                      value={aiConfig?.model || ""}
+                      onChange={(e) =>
+                        setAiConfig(
+                          aiConfig ? { ...aiConfig, model: e.target.value } : null,
+                        )
+                      }
+                      className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/40"
+                    >
+                      {AIService.getAvailableModels().map((model) => (
+                        <option key={model} value={model}>
+                          {model}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  {/* Temperature Slider */}
+                  <div>
+                    <label className="block text-sm font-medium text-foreground/70 mb-2">
+                      Température: {aiConfig?.temperature.toFixed(1)}
+                    </label>
+                    <input
+                      type="range"
+                      min="0"
+                      max="2"
+                      step="0.1"
+                      value={aiConfig?.temperature || 0.7}
+                      onChange={(e) =>
+                        setAiConfig(
+                          aiConfig
+                            ? { ...aiConfig, temperature: parseFloat(e.target.value) }
+                            : null,
+                        )
+                      }
+                      className="w-full"
+                    />
+                    <p className="text-xs text-foreground/50 mt-1">
+                      0 = déterministe, 2 = très créatif
+                    </p>
+                  </div>
+
+                  {/* Max Tokens */}
+                  <div>
+                    <label className="block text-sm font-medium text-foreground/70 mb-2">
+                      Tokens max
+                    </label>
+                    <input
+                      type="number"
+                      min="128"
+                      max="4096"
+                      value={aiConfig?.maxTokens || 2048}
+                      onChange={(e) =>
+                        setAiConfig(
+                          aiConfig
+                            ? { ...aiConfig, maxTokens: parseInt(e.target.value, 10) }
+                            : null,
+                        )
+                      }
+                      className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-white/40"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* System Prompt and API Key */}
+              <div className="bg-white/5 border border-white/10 rounded-xl p-6">
+                <h3 className="text-lg font-semibold text-white mb-6 flex items-center gap-2">
+                  <Settings size={20} />
+                  Configuration avancée
+                </h3>
+
+                <div className="space-y-5">
+                  {/* System Prompt */}
+                  <div>
+                    <label className="block text-sm font-medium text-foreground/70 mb-2">
+                      Prompt système
+                    </label>
+                    <textarea
+                      value={aiConfig?.systemPrompt || ""}
+                      onChange={(e) =>
+                        setAiConfig(
+                          aiConfig
+                            ? { ...aiConfig, systemPrompt: e.target.value }
+                            : null,
+                        )
+                      }
+                      rows={5}
+                      className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-white/40 resize-none"
+                      placeholder="Entrez les instructions pour l'IA..."
+                    />
+                  </div>
+
+                  {/* API Key */}
+                  <div>
+                    <label className="block text-sm font-medium text-foreground/70 mb-2">
+                      Clé API OpenRouter
+                    </label>
+                    <input
+                      type="password"
+                      value={aiConfig?.apiKey || ""}
+                      onChange={(e) =>
+                        setAiConfig(
+                          aiConfig ? { ...aiConfig, apiKey: e.target.value } : null,
+                        )
+                      }
+                      className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-white/40"
+                      placeholder="sk-or-..."
+                    />
+                    <p className="text-xs text-foreground/50 mt-2">
+                      Votre clé API restera sécurisée
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Save Button */}
+            <div className="mt-8 flex justify-end">
+              <button
+                onClick={handleSaveAiConfig}
+                disabled={savingAiConfig}
+                className="flex items-center gap-2 px-6 py-3 bg-white/20 hover:bg-white/30 disabled:opacity-50 text-white font-semibold rounded-lg border border-white/40 transition-all"
+              >
+                <Save size={18} />
+                {savingAiConfig ? "Sauvegarde..." : "Sauvegarder"}
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
